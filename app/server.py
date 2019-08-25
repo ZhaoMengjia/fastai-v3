@@ -13,6 +13,11 @@ export_file_url = 'https://drive.google.com/uc?export=download&id=1bUlf2Jg8kgaAO
 export_file_name = 'ZYL48.pkl'
 
 classes = ['douzi', 'luofusheng', 'shenwei', 'xiaogongye', 'xiaoxue']
+names = {'douzi': '冯豆子', 
+         'luofusheng': '罗浮生', 
+         'shenwei': '沈巍', 
+         'xiaogongye': '小公爷',
+         'xiaoxue': '傅红雪'}
 path = Path(__file__).parent
 
 app = Starlette()
@@ -61,7 +66,7 @@ async def analyze(request):
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
-    return JSONResponse({'result': str(prediction)})
+    return JSONResponse({'result': str(names[prediction])})
 
 
 if __name__ == '__main__':
